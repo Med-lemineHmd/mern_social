@@ -40,14 +40,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// MONGOOSE SETUP //
+const PORT = process.env.PORT || 6001;
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(PORT, () =>
+      console.log(`Server is running on http://localhost:${PORT}`)
+    );
+  })
+  .catch((err) => console.log(`${error} did not connect`));
+
 app.get("/", (req, res) => {
   res.send("This is index.js");
-});
-
-app.listen(5000, (err) => {
-  if (!err) {
-    console.log("Server is running on http://localhost:5000");
-  } else {
-    console.log(err);
-  }
 });
