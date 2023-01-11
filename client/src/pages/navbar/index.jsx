@@ -54,7 +54,7 @@ const Navbar = () => {
           />
           <Typography
             fontWeight="bold"
-            fontSize="clamp(1rem, 2rem, 2.25rem)"
+            fontSize="clamp(1rem, 1.6rem, 2rem)"
             color="primary"
             onClick={() => navigate("/home")}
             sx={{
