@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state/index";
 import Dropzone from "react-dropzone";
+import PersonIcon from "@mui/icons-material/Person";
+
 import FlexBetween from "./../../components/FlexBetween";
 
 const registerSchema = yup.object().shape({
@@ -133,7 +135,7 @@ const Form = () => {
             {isRegister && (
               <>
                 <TextField
-                  label="First Name"
+                  label={`${(<PersonIcon />)} First Name`}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.firstName}
