@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   Box,
   Button,
@@ -8,19 +10,18 @@ import {
   useTheme,
   InputAdornment,
 } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setLogin } from "../../state/index";
 import Dropzone from "react-dropzone";
+
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import PersonIcon from "@mui/icons-material/Person";
 import PlaceIcon from "@mui/icons-material/Place";
 import WorkIcon from "@mui/icons-material/Work";
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 
+import { setLogin } from "../../state/index";
 import FlexBetween from "./../../components/FlexBetween";
 
 const registerSchema = yup.object().shape({
