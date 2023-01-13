@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  InputAdornment,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -15,6 +16,10 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../state/index";
 import Dropzone from "react-dropzone";
 import PersonIcon from "@mui/icons-material/Person";
+import PlaceIcon from "@mui/icons-material/Place";
+import WorkIcon from "@mui/icons-material/Work";
+import EmailIcon from "@mui/icons-material/Email";
+import PasswordIcon from "@mui/icons-material/Password";
 
 import FlexBetween from "./../../components/FlexBetween";
 
@@ -50,6 +55,7 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -57,6 +63,10 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width: 600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
+
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
 
   const register = async (values, onSubmitProps) => {
     // send form info with img
@@ -135,7 +145,14 @@ const Form = () => {
             {isRegister && (
               <>
                 <TextField
-                  label={`${(<PersonIcon />)} First Name`}
+                  label="First Name"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <PersonIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.firstName}
@@ -148,6 +165,13 @@ const Form = () => {
                 />
                 <TextField
                   label="Last Name"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <PersonIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.lastName}
@@ -158,6 +182,13 @@ const Form = () => {
                 />
                 <TextField
                   label="Location"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <PlaceIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.location}
@@ -168,6 +199,13 @@ const Form = () => {
                 />
                 <TextField
                   label="Occupation"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <WorkIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.occupation}
@@ -216,6 +254,13 @@ const Form = () => {
 
             <TextField
               label="Email"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon />
+                  </InputAdornment>
+                ),
+              }}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.email}
@@ -226,7 +271,17 @@ const Form = () => {
             />
             <TextField
               label="Password"
-              type="password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <PasswordIcon
+                      onClick={togglePassword}
+                      sx={{ "&:hover": { cursor: "pointer" } }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
+              type={passwordShown ? "text" : "password"}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
@@ -245,6 +300,7 @@ const Form = () => {
               sx={{
                 m: "2rem 0",
                 p: "1rem",
+                fontSize: "1rem",
                 backgroundColor: palette.primary.main,
                 color: palette.background.alt,
                 "&:hover": { color: palette.primary.main },
