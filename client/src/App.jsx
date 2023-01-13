@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -12,21 +13,28 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index element={<LoginPage />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/profile/:userId" element={<ProfilePage />} />
-
-      <Route path="*" element={<NotFound />} />
-    </Route>
-  )
-);
-
 const App = () => {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const isAuth = Boolean(useSelector((state) => state.token));
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<LoginPage />} />
+        <Route
+          path="/home"
+          element={isAuth ? <HomePage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/profile/:userId"
+          element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+        />
+
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    )
+  );
 
   return (
     <ThemeProvider theme={theme}>
