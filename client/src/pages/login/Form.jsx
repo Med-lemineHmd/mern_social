@@ -6,7 +6,7 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
-} from "@mui/icons-material";
+} from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
