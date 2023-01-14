@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ChatBubbleOutline,
+  ChatBubbleOutlineOutlined,
   FavoriteBorderOutlined,
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Tooltip,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import FlexBetween from "./../../components/FlexBetween";
 import Friend from "../../components/Friend";
 import WidgetWrapper from "./../../components/WidgetWrapper";
@@ -23,7 +30,7 @@ const PostWidget = ({
   likes,
   comments,
 }) => {
-  const { isComments, setIsComments } = useState(false);
+  const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
@@ -69,7 +76,6 @@ const PostWidget = ({
       )}
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
-          {/* Likes */}
           <FlexBetween gap="0.3rem">
             <IconButton onClick={patchLike}>
               {isLiked ? (
@@ -80,10 +86,10 @@ const PostWidget = ({
             </IconButton>
             <Typography>{likeCount}</Typography>
           </FlexBetween>
-          {/* COMMENTS */}
+
           <FlexBetween gap="0.3rem">
             <IconButton onClick={() => setIsComments(!isComments)}>
-              <ChatBubbleOutline />
+              <ChatBubbleOutlineOutlined />
             </IconButton>
             <Typography>{comments.length}</Typography>
           </FlexBetween>
