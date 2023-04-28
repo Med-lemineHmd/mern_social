@@ -19,6 +19,7 @@ import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 import { users, posts } from "./data/index.js";
+import { log } from "console";
 
 // CONFIGURATIONS //
 // __dirname type module Alternative
@@ -65,7 +66,7 @@ app.use("/posts", postRoutes);
 const PORT = process.env.PORT || 6001;
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect(process.env.MONGO_ATLAS_DB, {
     useUnifiedTopology: true,
   })
   .then(() => {
@@ -75,8 +76,8 @@ mongoose
     });
 
     // ADD DATA ONE TIME
-    // User.insertMany(users);
-    // Post.insertMany(posts);
+    User.insertMany(users);
+    Post.insertMany(posts);
   })
   .catch((error) => console.log(`${error} did not connect`));
 
