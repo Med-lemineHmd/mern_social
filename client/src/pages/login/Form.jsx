@@ -22,7 +22,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 
 import { setLogin } from "../../state/index";
-import FlexBetween from "./../../components/FlexBetween";
+import FlexBetween from "../../components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -57,6 +57,7 @@ const initialValuesLogin = {
 const Form = () => {
   const [pageType, setPageType] = useState("login");
   const [passwordShown, setPasswordShown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const Form = () => {
 
   const register = async (values, onSubmitProps) => {
     // send form info with img
+    isLoading(true);
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
@@ -89,15 +91,20 @@ const Form = () => {
 
     if (savedUser) {
       setPageType("login");
+      setIsLoading(false);
     }
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("https://social-app-hvku.onrender.com/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
+    setIsLoading(true);
+    const loggedInResponse = await fetch(
+      "https://social-app-hvku.onrender.com/auth/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      }
+    );
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
@@ -108,6 +115,7 @@ const Form = () => {
         })
       );
       navigate("/home");
+      setIsLoading(false);
     }
   };
 
@@ -308,6 +316,7 @@ const Form = () => {
               }}
             >
               {isLogin ? "LOGIN" : "REGISTER"}
+              {isLoading && (isLogin || isRegister) ? "..." : ""}
             </Button>
             <Typography
               onClick={() => {

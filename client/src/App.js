@@ -5,7 +5,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { HomePage, LoginPage, ProfilePage, Navbar, NotFound } from "./pages";
+import { HomePage, LoginPage, ProfilePage, NotFound } from "./pages";
 import RootLayout from "./layouts/RootLayout";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
